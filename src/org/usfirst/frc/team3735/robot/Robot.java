@@ -12,6 +12,7 @@ import org.usfirst.frc.team3735.robot.subsystems.Navigation;
 import org.usfirst.frc.team3735.robot.subsystems.Scaler;
 import org.usfirst.frc.team3735.robot.subsystems.Shooter;
 import org.usfirst.frc.team3735.robot.subsystems.Ultrasonic;
+import org.usfirst.frc.team3735.robot.subsystems.Vision;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 
 import edu.wpi.cscore.UsbCamera;
@@ -50,6 +51,7 @@ public class Robot extends IterativeRobot {
 	public static Shooter shooter;
 	public static Navigation navigation;
 	public static Ultrasonic ultra;
+	public static Vision vision;
 	
 	public static DriveOI oi;
 	public RobotMap robotmap;
@@ -82,6 +84,7 @@ public class Robot extends IterativeRobot {
 		}
 		oi = new GTAOI();
 		ultra = new Ultrasonic();
+		vision = new Vision();
 		
 		autonomousChooser = new SendableChooser();
 		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
