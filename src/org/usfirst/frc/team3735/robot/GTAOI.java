@@ -3,44 +3,20 @@ package org.usfirst.frc.team3735.robot;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
-import org.usfirst.frc.team3735.robot.commands.InterruptOperations;
 import org.usfirst.frc.team3735.robot.commands.autonomous.AutonForwardDrivePositionWithGearDropPinLeft;
 import org.usfirst.frc.team3735.robot.commands.autonomous.AutonForwardDriveSquare;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerIn;
-import org.usfirst.frc.team3735.robot.commands.ballintake.BallIntakeRollerOff;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveJogTwistLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveJogTwistRight;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveBrake;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToBallDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToCustomDriveSettings;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveChangeToGearDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceInchesTest;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveForwardToCurrentGyroHeading;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveDistanceTwist;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveMoveTwistAngle;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToOffsetGyroHeading;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveStopRobot;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveSwitchDirection;
-import org.usfirst.frc.team3735.robot.commands.drive.DriveTurnToAngle;
-import org.usfirst.frc.team3735.robot.commands.drive.ExpDrive;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeClose;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeDropOff;
 import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeFeeding;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeOpen;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersIn;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeRollersOut;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeSwitchUpDown;
-import org.usfirst.frc.team3735.robot.commands.gearintake.GearIntakeToggleOpenClose;
-import org.usfirst.frc.team3735.robot.commands.scaler.ScalerOff;
-import org.usfirst.frc.team3735.robot.commands.scaler.ScalerUp;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOff;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorHigh;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorLow;
 import org.usfirst.frc.team3735.robot.commands.shooter.ShooterOnAgitatorSmartDash;
-import org.usfirst.frc.team3735.robot.commands.shooter.ShooterSwitchEnabled;
-
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.Joystick.AxisType;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -100,26 +76,6 @@ public class GTAOI implements DriveOI {
 		Button cpov270 = new JoystickPOVButton(cojoy, 270);
 		Button cpov315 = new JoystickPOVButton(cojoy, 315);
 
-		// layout for single driver
-		// y.toggleWhenPressed(new BallIntakeRollerIn());
-		// rb.toggleWhenPressed(new GearIntakeToggleOpenClose());
-		// a.whileHeld(new GearIntakeFeeding());
-		// b.whenPressed(new GearIntakeDropOff());
-		// rb.toggleWhenPressed(new ScalerUp());
-		// x.whenPressed(new ShooterSwitchEnabled());
-		// lb.whileHeld(new DriveBrake());
-		// start.whenPressed(new DriveSwitchDirection());
-		// pov0.whenPressed(new DriveTurnToAngle(0));
-		// pov45.whenPressed(new DriveTurnToAngle(45));
-		// pov90.whenPressed(new DriveTurnToAngle(90));
-		// pov135.whenPressed(new DriveTurnToAngle(135));
-		// pov180.whenPressed(new DriveTurnToAngle(180));
-		// pov225.whenPressed(new DriveTurnToAngle(-135));
-		// pov270.whenPressed(new DriveTurnToAngle(-90));
-		// pov315.whenPressed(new DriveTurnToAngle(-45));
-
-		// layout for two drivers
-
 		x.whileHeld(new DriveStopRobot());
 		b.whenPressed(new GearIntakeDropOff());
 
@@ -130,67 +86,26 @@ public class GTAOI implements DriveOI {
 
 		lb.whileHeld(new DriveJogTwistLeft());
 		rb.whileHeld(new DriveJogTwistRight());
-		
-//
-//		pov0.whenPressed(new DriveMoveDistanceTwist(0));
-//		pov45.whenPressed(new DriveMoveDistanceTwist(60));
-//		pov90.whenPressed(new DriveMoveDistanceTwist(90));
-//		pov135.whenPressed(new DriveMoveDistanceTwist(120));
-//		pov180.whenPressed(new DriveMoveDistanceTwist(180));
-//		pov225.whenPressed(new DriveMoveDistanceTwist(-120));
-//		pov270.whenPressed(new DriveMoveDistanceTwist(-90));
-//		pov315.whenPressed(new DriveMoveDistanceTwist(-60));
-		
-//		pov0.whenPressed(new DriveTurnToAngle(0));
-//		pov45.whenPressed(new DriveTurnToAngle(60));
-//		pov90.whenPressed(new DriveTurnToAngle(90));
-//		pov135.whenPressed(new DriveTurnToAngle(150));
-//		pov180.whenPressed(new DriveTurnToAngle(180));
-//		pov225.whenPressed(new DriveTurnToAngle(-150));
-//		pov270.whenPressed(new DriveTurnToAngle(-90));
-//		pov315.whenPressed(new DriveTurnToAngle(-60));
-	
-//   
-//		cy.whenPressed(new ScalerUp());
-//		cx.whenPressed(new ScalerOff());
-//		ca.whileHeld(new GearIntakeRollersIn());
-//		cb.whileHeld(new GearIntakeRollersOut());
-//		
-//		crb.whenPressed(new GearIntakeOpen());
-//		crt.whenPressed(new GearIntakeClose());
-//		
-//		cpov0.whenPressed(new ShooterOnAgitatorHigh());
+
+		// cpov0.whenPressed(new ShooterOnAgitatorHigh());
 		cpov90.whenPressed(new ShooterOnAgitatorSmartDash());
-//		cpov180.whenPressed(new ShooterOnAgitatorLow());
+		// cpov180.whenPressed(new ShooterOnAgitatorLow());
 		cpov270.whenPressed(new ShooterOff());
-//		
-//		clt.whenPressed(new BallIntakeRollerOff());
-//		clb.whenPressed(new BallIntakeRollerIn());
-//		
-//		cstart.whenPressed(new InterruptOperations());
-//		
-		    SmartDashboard.putData("Test Navx Go 50",new  DriveForwardToCurrentGyroHeading(50));
-		    SmartDashboard.putData("Test Navx Go 25",new  DriveForwardToCurrentGyroHeading(25));
-		     
-	        SmartDashboard.putData("Test Navx 0 ",new  DriveTurnToOffsetGyroHeading(0));
-	        SmartDashboard.putData("Test Navx 10 ",new  DriveTurnToOffsetGyroHeading(10));
-	        SmartDashboard.putData("Test Navx 90 ",new  DriveTurnToOffsetGyroHeading(90));
-	        SmartDashboard.putData("Test Navx 30 ",new  DriveTurnToOffsetGyroHeading(30));
-	        SmartDashboard.putData("Test Navx 45 ",new  DriveTurnToOffsetGyroHeading(45));
-	        
-	        SmartDashboard.putData("AutonForwardDrivePositionWithGearDropPinLeft ",new  AutonForwardDrivePositionWithGearDropPinLeft());
-	        
-	        SmartDashboard.putData("AutonForwardDriveSquare ",new  AutonForwardDriveSquare());
-	        
-	        
-		       
-	        
-	        
-	        
-	        
-	  	  
-	        
-		    
+
+		SmartDashboard.putData("Test Navx Go 50", new DriveForwardToCurrentGyroHeading(50));
+		SmartDashboard.putData("Test Navx Go 25", new DriveForwardToCurrentGyroHeading(25));
+
+		SmartDashboard.putData("Test Navx 0 ", new DriveTurnToOffsetGyroHeading(0));
+		SmartDashboard.putData("Test Navx 10 ", new DriveTurnToOffsetGyroHeading(10));
+		SmartDashboard.putData("Test Navx 90 ", new DriveTurnToOffsetGyroHeading(90));
+		SmartDashboard.putData("Test Navx 30 ", new DriveTurnToOffsetGyroHeading(30));
+		SmartDashboard.putData("Test Navx 45 ", new DriveTurnToOffsetGyroHeading(45));
+
+		SmartDashboard.putData("AutonForwardDrivePositionWithGearDropPinLeft ",
+				new AutonForwardDrivePositionWithGearDropPinLeft());
+
+		SmartDashboard.putData("AutonForwardDriveSquare ", new AutonForwardDriveSquare());
+
 	}
 
 	@Override
@@ -270,8 +185,7 @@ public class GTAOI implements DriveOI {
 	@Override
 	public void log() {
 		SmartDashboard.putNumber("right joystick angle", getMainRightAngle());
-		SmartDashboard.putNumber("right joystick magnitude",
-				getMainRightMagnitude());
+		SmartDashboard.putNumber("right joystick magnitude", getMainRightMagnitude());
 
 	}
 

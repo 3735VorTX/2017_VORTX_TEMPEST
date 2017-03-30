@@ -32,7 +32,7 @@ public class DriveTurnToSmartDashboardAngle extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !theturncmd.isRunning(); /* TESTME */
+        return !theturncmd.isRunning(); /* TESTME AND FIX ME */
     }
 
     // Called once after isFinished returns true
