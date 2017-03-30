@@ -3,7 +3,7 @@ package org.usfirst.frc.team3735.robot;
 import org.usfirst.frc.team3735.robot.util.DriveOI;
 import org.usfirst.frc.team3735.robot.util.JoystickPOVButton;
 import org.usfirst.frc.team3735.robot.util.JoystickTriggerButton;
-import org.usfirst.frc.team3735.robot.commands.autonomous.AutonForwardDrivePositionWithGearDropPinLeft;
+import org.usfirst.frc.team3735.robot.commands.autonomous.AutonForwardDrivePositionLeftWithGearDrop;
 import org.usfirst.frc.team3735.robot.commands.autonomous.AutonForwardDriveSquare;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveJogTwistLeft;
 import org.usfirst.frc.team3735.robot.commands.drive.DriveJogTwistRight;
@@ -26,6 +26,7 @@ public class GTAOI implements DriveOI {
 	Joystick joy;
 	Joystick cojoy;
 
+	@SuppressWarnings("unused")
 	public GTAOI() {
 
 		// joystick port mapping
@@ -92,6 +93,8 @@ public class GTAOI implements DriveOI {
 		// cpov180.whenPressed(new ShooterOnAgitatorLow());
 		cpov270.whenPressed(new ShooterOff());
 
+		if (false)
+		{	
 		SmartDashboard.putData("Test Navx Go 50", new DriveForwardToCurrentGyroHeading(50));
 		SmartDashboard.putData("Test Navx Go 25", new DriveForwardToCurrentGyroHeading(25));
 
@@ -102,10 +105,11 @@ public class GTAOI implements DriveOI {
 		SmartDashboard.putData("Test Navx 45 ", new DriveTurnToOffsetGyroHeading(45));
 
 		SmartDashboard.putData("AutonForwardDrivePositionWithGearDropPinLeft ",
-				new AutonForwardDrivePositionWithGearDropPinLeft());
+				new AutonForwardDrivePositionLeftWithGearDrop());
 
 		SmartDashboard.putData("AutonForwardDriveSquare ", new AutonForwardDriveSquare());
-
+		}
+		
 	}
 
 	@Override

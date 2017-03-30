@@ -63,6 +63,20 @@ public class Robot extends IterativeRobot {
 	//camera stuff
 	CameraServer camerserver;
 	
+	public void presentAutonModes(){
+		autonomousChooser = new SendableChooser();
+		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
+		autonomousChooser.addObject("CenterStart Drop GearOnPin", new  AutonForwardDrivePositionWithGearDrop());
+		autonomousChooser.addObject("LeftStart   Drop GearOnPin", new  AutonForwardDrivePositionLeftWithGearDrop());
+		autonomousChooser.addObject("RightStart  DroP GearOnPin", new  AutonForwardDrivePositionRightWithGearDrop());
+		
+		//autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDrivePositionSideWithGearDrop());
+		//autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
+		//autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
+		//autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
+		//autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
+		SmartDashboard.putData("RobotAutoNMode", autonomousChooser);
+	}
 	
 	
 	/**
@@ -86,16 +100,7 @@ public class Robot extends IterativeRobot {
 		ultra = new Ultrasonic();
 		vision = new Vision();
 		
-		autonomousChooser = new SendableChooser();
-		autonomousChooser.addDefault ("Do Nothing", new AutonomousDoNothing());
-		//autonomousChooser.addObject("TimedDriveBaseStraightOnlyToBase", new AutonTimedDriveTimedDriveStraightToBase());
-		//autonomousChooser.addObject("Drive to Base Line", new AutonForwardDrivePosition());
-		autonomousChooser.addObject("Drive to NEW middle and drop gear", new  AutonForwardDrivePositionWithGearDrop());
-		//autonomousChooser.addObject("Drive to side and drop gear", new  AutonForwardDrivePositionSideWithGearDrop());
-		autonomousChooser.addObject("Drive to NEW left side and drop gear", new  AutonForwardDrivePositionWithGearDropPinLeft());
-		//autonomousChooser.addObject("Drive to right side and drop gear", new  AutonForwardDrivePositionRightWithGearDrop());
-		//autonomousChooser.addObject("Drive to middle drop gear and drive to baseline", new  AutonMiddleGearThenBaseline());
-		SmartDashboard.putData("RobotAutoNMode", autonomousChooser);
+
 		/* Lets Start the WEB CAMERA */
 
 		if (CAMERA_ENABLED) {

@@ -75,7 +75,6 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 	private STATE currentstate;
 	private STATE nextstate;
 	private double stateDoWorkTime = 0;
-	private boolean typeistwist = false;
 	private boolean done = false;
 	private short postreachcntr = 0;
 
@@ -86,7 +85,6 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		this.currentstate = STATE.IDLE;
 		this.nextstate = STATE.IDLE;
 		this.displacementInches = distance;
-		this.typeistwist = false;
 		this.filtspeed = 0;
 		this.movespeed = 0;
 		this.yawtwistcorrection = 0.0;
@@ -94,20 +92,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 
 	}
 
-	public DriveForwardToCurrentGyroHeading(double distance, boolean typeistwist) {
-		// Use requires() here to declare subsystem dependencies
-		// eg. requires(chassis);
-		requires(Robot.drive);
-		this.currentstate = STATE.IDLE;
-		this.nextstate = STATE.IDLE;
-		this.displacementInches = distance;
-		this.typeistwist = typeistwist;
-		this.filtspeed = 0;
-		this.yawtwistcorrection = 0.0;
-		this.setTimeout(15.0);
-
-	}
-
+	
 	// Called just before this Command runs the first time
 	protected void initialize() {
 		done = false;
@@ -146,15 +131,9 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 			startPositionRightInches = Robot.drive.getInchesPositionRightInches();
 
 			/********************/
-			if (typeistwist == false) {
-				endPositionLeftInches = startPositionLeftInches + displacementInches;
-				endPositionRightInches = startPositionRightInches + displacementInches;
-			} else {
-				endPositionLeftInches = startPositionLeftInches + displacementInches;
-				endPositionRightInches = startPositionRightInches - displacementInches;
-			}
-
-			
+			endPositionLeftInches = startPositionLeftInches + displacementInches;
+			endPositionRightInches = startPositionRightInches + displacementInches;
+		
 			this.nextstate = STATE.STARTPID; /* Just Index to Next State */
 			break;
 
@@ -184,7 +163,8 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 				if (isPositionEndZone() == true)
 					filtspeed = NORMALMOVESPEED/-8;
 				else
-					filtspeed = ((EXPRAMP_NFACTOR - 1) * filtspeed + NORMALMOVESPEED) / EXPRAMP_NFACTOR;
+					filtspeed = ((EXPRAMP_NFACTOR - 1) * filtspeed  + NORMALMOVESPEED) 
+									/ EXPRAMP_NFACTOR;
 		
 			
 				movespeed = filtspeed;
@@ -239,7 +219,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 			System.out.println("<");
 		}
 
-		if (ErrLeft < REACHEDTOLERANCE && ErrRight < REACHEDTOLERANCE) {
+		if (Math.abs(ErrLeft) < REACHEDTOLERANCE && Math.abs(ErrRight) < REACHEDTOLERANCE) {
 			rval = true;
 		}
 		return rval;
@@ -250,8 +230,8 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		double ErrLeft = Robot.drive.getInchesPositionLeftInches()- startPositionLeftInches;
 		double ErrRight =  Robot.drive.getInchesPositionRightInches()-startPositionRightInches;
 
-		if (ErrLeft< BEGINZONEINCHES
-				&& ErrRight < BEGINZONEINCHES) {
+		if (Math.abs(ErrLeft)< BEGINZONEINCHES
+				&& Math.abs(ErrRight) < BEGINZONEINCHES) {
 			rval = true;
 		}
 		return rval;
@@ -259,11 +239,11 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 
 	protected boolean isPositionEndZone() {
 		boolean rval = false;
-		double ErrLeft = endPositionLeftInches - Robot.drive.getInchesPositionLeftInches()- startPositionLeftInches;
-		double ErrRight = endPositionRightInches - Robot.drive.getInchesPositionRightInches()-startPositionRightInches;
+		double ErrLeft = endPositionLeftInches - Robot.drive.getInchesPositionLeftInches();
+		double ErrRight = endPositionRightInches - Robot.drive.getInchesPositionRightInches();
 
-		if (ErrLeft < ENDZONEINCHES
-				&& ErrRight< ENDZONEINCHES) {
+		if (Math.abs(ErrLeft) < ENDZONEINCHES
+				&& Math.abs(ErrRight)< ENDZONEINCHES) {
 			rval = true;
 		}
 		return rval;
@@ -289,7 +269,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		/*****************************************
 		 * Calculate Yaw Correction States
 		 *****************************************/
-		if (ENABLE_YAWMODE && !typeistwist)
+		if (ENABLE_YAWMODE)
 			yawtwistcorrection = calculateYawCorrection();
 		else
 			yawtwistcorrection = 0;
@@ -301,7 +281,7 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 			if (this.currentstate == STATE.REACHED)
 				Robot.drive.arcadeDrive((endPositionLeftInches- Robot.drive.getInchesPositionLeftInches())/100, yawtwistcorrection, false);
 			else
-				Robot.drive.arcadeDrive(movespeed, yawtwistcorrection, false);
+				Robot.drive.arcadeDrive((displacementInches<0)?-movespeed:movespeed, yawtwistcorrection, false);
 			
 				
 		} else {
