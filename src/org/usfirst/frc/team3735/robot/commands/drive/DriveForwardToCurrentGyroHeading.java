@@ -331,13 +331,11 @@ public class DriveForwardToCurrentGyroHeading extends Command {
 		currentYawReading = Robot.navigation.getYaw() ;
 		reval = 	currentYawReading	 / -180.0;
 
-		if (reval > 0.5)
-			reval = 0.5;
+		/* Clamps */
+		if (reval > 0.5)			reval = 0.5;
+		if (reval < -0.5)			reval = -0.5;
 
-		if (reval < -0.5)
-			reval = -0.5;
-
-		return reval*4.0;
+		return reval*4.0; /* The Multiplier is Aggressiveness for Correction*/
 
 	}
 	protected void showDashTestInfo() {
